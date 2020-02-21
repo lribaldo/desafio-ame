@@ -1,0 +1,29 @@
+{
+	"id": "2f423740-eb02-4c96-9c92-94e85fb765ac",
+	"name": "ChallengeAPI-variables",
+	"values": [
+		{
+			"key": "$name",
+			"value": "test",
+			"enabled": true
+		},
+		{
+			"key": "$salary",
+			"value": "0",
+			"enabled": true
+		},
+		{
+			"key": "$age",
+			"value": "0",
+			"enabled": true
+		},
+		{
+			"key": "$employeeId",
+			"value": "0",
+			"enabled": true
+		}
+	],
+	"_postman_variable_scope": "environment",
+	"_postman_exported_at": "2020-02-21T00:58:15.761Z",
+	"_postman_exported_using": "Postman/7.18.0"
+}
