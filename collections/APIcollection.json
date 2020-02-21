@@ -14,14 +14,7 @@
 					"script": {
 						"id": "94032b1b-206a-41b7-8769-08db3303f8a5",
 						"exec": [
-							"// nome do empregrado",
-							"pm.environment.set(\"$name\", \"test\");",
-							"",
-							"// salário do empregado",
-							"pm.environment.set(\"$salary\", \"123\");",
-							"",
-							"// idade do empregado",
-							"pm.environment.set(\"$age\", \"23\");"
+							""
 						],
 						"type": "text/javascript"
 					}
@@ -39,6 +32,14 @@
 							"    var jsonData = pm.response.json();",
 							"    pm.environment.set(\"$employeeId\", jsonData.data.id);",
 							"    pm.expect(jsonData.status).to.eql('success');",
+							"});",
+							"",
+							"pm.test(\"Response data equal to inserted\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.environment.set(\"$employeeId\", jsonData.data.id);",
+							"    pm.expect(jsonData.data.name).to.eql(pm.environment.get(\"$name\"));",
+							"    pm.expect(jsonData.data.salary).to.eql(pm.environment.get(\"$salary\"));",
+							"    pm.expect(jsonData.data.age).to.eql(pm.environment.get(\"$age\"));",
 							"});"
 						],
 						"type": "text/javascript"
@@ -185,7 +186,7 @@
 							"    pm.expect(employeeData.status).to.eql('success');",
 							"});",
 							"",
-							"pm.test(\"Successfully deleted\", function () {",
+							"pm.test(\"Successfully deleted message\", function () {",
 							"    var employeeData = pm.response.json();",
 							"    pm.expect(employeeData.message).to.eql('successfully! deleted Records');",
 							"});"
@@ -240,28 +241,28 @@
 	],
 	"variable": [
 		{
-			"id": "89ced43d-60ce-4aa2-849d-2180185af04a",
+			"id": "63d06f20-4a5e-4105-9c4c-b6c028d1ed6d",
 			"key": "$name",
 			"value": "null",
 			"type": "string",
 			"disabled": true
 		},
 		{
-			"id": "4e3ea639-3ff0-4d36-bd0c-b2c4aed343a6",
+			"id": "27d7b48a-8a9c-4f99-a499-ed7d7bba3162",
 			"key": "$salary",
 			"value": "0",
 			"type": "string",
 			"disabled": true
 		},
 		{
-			"id": "e75baa83-aff2-4633-8e2f-2925b51c7b4b",
+			"id": "f60828ed-5853-4128-a286-0be06606d39f",
 			"key": "$age",
 			"value": "0",
 			"type": "string",
 			"disabled": true
 		},
 		{
-			"id": "0c83a20e-f865-4bb5-98e6-74e1604ce1b8",
+			"id": "dae536dc-e954-40c5-8fc2-44949905b0c4",
 			"key": "$employeeId",
 			"value": "0",
 			"type": "string",
