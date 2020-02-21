@@ -1,0 +1,272 @@
+{
+	"info": {
+		"_postman_id": "63df5e9a-f4da-414a-b9ff-bc27c514e01d",
+		"name": "Challenge-API",
+		"description": "PROJETO (WebService/API)\r\nCriar um projeto de automação utilizando a API pública\r\nhttp://dummy.restapiexample.com/ utilizando BDD com os cenários:\r\n- Criar um empregado.\r\n- Validar se o empregado foi criado corretamente.\r\n- Exclua esse usuário.\r\n\r\nRequerido: Validar sempre o Status Code e a mensagem exibida.\r\nDesejável: Gerar relatório dos testes executados.\r\n\r\n• Linguagem:\r\n Ruby\r\n Java\r\n Python\r\n Kotlin\r\n\r\n• Framework:\r\n HTTParty\r\n Rspec\r\n Postman\r\n SoapUI\r\n\r\n• Ferramentas:\r\n BDD\r\n Cucumber\r\n Git\r\n Boas práticas\r\n Outro",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create employee",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "94032b1b-206a-41b7-8769-08db3303f8a5",
+						"exec": [
+							"// nome do empregrado",
+							"pm.environment.set(\"$name\", \"test\");",
+							"",
+							"// salário do empregado",
+							"pm.environment.set(\"$salary\", \"123\");",
+							"",
+							"// idade do empregado",
+							"pm.environment.set(\"$age\", \"23\");"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "24e58d48-0caa-4690-9e21-2f9613474230",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"The respose is success\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.environment.set(\"$employeeId\", jsonData.data.id);",
+							"    pm.expect(jsonData.status).to.eql('success');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "name",
+						"value": "Test",
+						"description": "Nome do empregado",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "salary",
+						"value": "1500",
+						"description": "Salário do empregado",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "age",
+						"value": "25",
+						"description": "Idade do empregado",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\":{{$name}},\n\t\"salary\":{{$salary}},\n\t\"age\":{{$age}}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://dummy.restapiexample.com/api/v1/create",
+					"protocol": "http",
+					"host": [
+						"dummy",
+						"restapiexample",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get employee",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "9f9b713e-8cff-420e-b3dc-b37abb9d70ee",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "ebb6536e-c884-4155-ba22-37190ef2fa23",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"The respose is success\", function () {",
+							"    var employeeData = pm.response.json();",
+							"    pm.expect(employeeData.status).to.eql('success');",
+							"});",
+							"",
+							"pm.test(\"Employee correctly saved\", function () {",
+							"    var employeeData = pm.response.json();",
+							"    pm.expect(employeeData.data.employee_name).to.eql(pm.environment.get(\"$name\"));",
+							"    pm.expect(employeeData.data.employee_salary).to.eql(pm.environment.get(\"salary\"));",
+							"    pm.expect(employeeData.data.employee_age).to.eql(pm.environment.get(\"$age\"));",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://dummy.restapiexample.com/api/v1/employee/{{$employeeId}}",
+					"protocol": "http",
+					"host": [
+						"dummy",
+						"restapiexample",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"employee",
+						"{{$employeeId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete employee",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a76ee2fd-88e4-4d96-9815-8b5106a90e34",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"The respose is success\", function () {",
+							"    var employeeData = pm.response.json();",
+							"    pm.expect(employeeData.status).to.eql('success');",
+							"});",
+							"",
+							"pm.test(\"Successfully deleted\", function () {",
+							"    var employeeData = pm.response.json();",
+							"    pm.expect(employeeData.message).to.eql('successfully! deleted Records');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://dummy.restapiexample.com/api/v1/delete/{{$employeeId}}",
+					"protocol": "http",
+					"host": [
+						"dummy",
+						"restapiexample",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"delete",
+						"{{$employeeId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "f0b90d96-1c73-4334-823f-ac75114f0383",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "c708aa75-ce93-4d69-89cb-b4ade2206f2b",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "89ced43d-60ce-4aa2-849d-2180185af04a",
+			"key": "$name",
+			"value": "null",
+			"type": "string",
+			"disabled": true
+		},
+		{
+			"id": "4e3ea639-3ff0-4d36-bd0c-b2c4aed343a6",
+			"key": "$salary",
+			"value": "0",
+			"type": "string",
+			"disabled": true
+		},
+		{
+			"id": "e75baa83-aff2-4633-8e2f-2925b51c7b4b",
+			"key": "$age",
+			"value": "0",
+			"type": "string",
+			"disabled": true
+		},
+		{
+			"id": "0c83a20e-f865-4bb5-98e6-74e1604ce1b8",
+			"key": "$employeeId",
+			"value": "0",
+			"type": "string",
+			"disabled": true
+		}
+	],
+	"protocolProfileBehavior": {}
+}

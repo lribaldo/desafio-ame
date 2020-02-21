@@ -1,0 +1,20 @@
+{
+  "name": "package",
+  "version": "1.0.0",
+  "description": "Default package",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "newman run collections/APIcollection.json -g variable-sets/variables.json -r html --reporter-html-export ."
+  },
+  "author": "Luiz Ribaldo <luizcribaldo@hotmail.com> (https://github.com/lribaldo)",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lribaldo/desafio-ame-API.git"
+  },
+  "dependencies": {
+    "newman": "^4.5.7",
+    "newman-reporter-html": "^1.0.5"
+  }
+}
